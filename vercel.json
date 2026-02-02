@@ -1,8 +1,17 @@
 {
-    "rewrites": [
+    "buildCommand": "npm run build",
+    "framework": "vite",
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "headers": [
         {
             "source": "/(.*)",
-            "destination": "/index.html"
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "no-cache, no-store, must-revalidate"
+                }
+            ]
         }
     ]
 }
