@@ -22,6 +22,8 @@ const AdminDashboard = () => {
     const [uploadingCv, setUploadingCv] = useState(false);
     const [uploadingImage, setUploadingImage] = useState(false);
     const [counts, setCounts] = useState({ projects: 0, skills: 0, services: 0 });
+    const [loginEmail, setLoginEmail] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
 
     useEffect(() => {
         if (user && activeTab === 'overview') {
@@ -234,6 +236,16 @@ const AdminDashboard = () => {
         window.location.reload();
     };
 
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setActionLoading(true);
+        const { error } = await supabase.auth.signInWithPassword({ email: loginEmail, password: loginPassword });
+        if (error) {
+            showStatus('error', error.message);
+            setActionLoading(false);
+        }
+    };
+
     if (loading && !user) {
         return (
             <div style={{
@@ -246,18 +258,6 @@ const AdminDashboard = () => {
     }
 
     if (!user) {
-        const [email, setEmail] = useState('');
-        const [password, setPassword] = useState('');
-        const handleLogin = async (e) => {
-            e.preventDefault();
-            setActionLoading(true);
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) {
-                showStatus('error', error.message);
-                setActionLoading(false);
-            }
-        };
-
         return (
             <div style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -298,8 +298,8 @@ const AdminDashboard = () => {
                             <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', fontWeight: '700', color: '#475569' }}>Email Address</label>
                             <input
                                 type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={loginEmail}
+                                onChange={(e) => setLoginEmail(e.target.value)}
                                 style={{
                                     width: '100%', padding: '14px 16px', borderRadius: '12px',
                                     border: '2px solid #e2e8f0', background: '#f8fafc', outline: 'none',
@@ -314,8 +314,8 @@ const AdminDashboard = () => {
                             <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.85rem', fontWeight: '700', color: '#475569' }}>Password</label>
                             <input
                                 type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={loginPassword}
+                                onChange={(e) => setLoginPassword(e.target.value)}
                                 style={{
                                     width: '100%', padding: '14px 16px', borderRadius: '12px',
                                     border: '2px solid #e2e8f0', background: '#f8fafc', outline: 'none',
