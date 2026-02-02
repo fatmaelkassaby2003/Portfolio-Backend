@@ -746,28 +746,28 @@ const AdminDashboard = () => {
                     )}
                 </div>
             )}
+
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+                .form-group { display: flex; flex-direction: column; gap: 8px; }
+                .form-group label { font-size: 0.75rem; font-weight: 800; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
+                .form-group input, .form-group textarea {
+                    padding: 13px 16px; border-radius: 10px; border: 2px solid #e5e7eb; background: #f9fafb;
+                    outline: none; transition: 0.3s; font-size: 0.95rem; color: #1e293b; font-weight: 500;
+                }
+                .form-group input:focus, .form-group textarea:focus {
+                    border-color: #667eea; background: #fff; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+                }
+                .admin-table-row:hover { background: #f9fafb; }
+                .icon-btn:hover { border-color: #667eea !important; background: #f0f4ff !important; }
+                .icon-btn.delete:hover { background: #fef2f2 !important; border-color: #ef4444 !important; }
+                .animate-spin { animation: spin 1s linear infinite; }
+                @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            `}} />
         </div>
     )
 }
-
-<style dangerouslySetInnerHTML={{
-    __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-        .form-group { display: flex; flex-direction: column; gap: 8px; }
-        .form-group label { font-size: 0.75rem; font-weight: 800; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input, .form-group textarea {
-            padding: 13px 16px; border-radius: 10px; border: 2px solid #e5e7eb; background: #f9fafb;
-            outline: none; transition: 0.3s; font-size: 0.95rem; color: #1e293b; font-weight: 500;
-        }
-        .form-group input:focus, .form-group textarea:focus {
-            border-color: #667eea; background: #fff; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        .admin-table-row:hover { background: #f9fafb; }
-        .icon-btn:hover { border-color: #667eea !important; background: #f0f4ff !important; }
-        .icon-btn.delete:hover { background: #fef2f2 !important; border-color: #ef4444 !important; }
-        .animate-spin { animation: spin 1s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    `}} />
     </div >
   );
 };
