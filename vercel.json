@@ -3,6 +3,10 @@
     "framework": "vite",
     "cleanUrls": true,
     "trailingSlash": false,
+    "outputDirectory": "dist",
+    "buildOutput": {
+        "cleanBuildCache": true
+    },
     "headers": [
         {
             "source": "/(.*)",
