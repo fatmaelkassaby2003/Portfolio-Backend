@@ -7,7 +7,7 @@ import Login from './pages/Login';
 import ProjectsPage from './pages/ProjectsPage';
 import SkillsPage from './pages/SkillsPage';
 import ServicesPage from './pages/ServicesPage';
-import AdminDashboard from './pages/AdminDashboard'; // Added import
+import AdminPanel from './pages/AdminPanel'; // Renamed from AdminDashboard
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -23,7 +23,7 @@ const AppContent = () => {
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/skills" element={<SkillsPage />} />
         <Route path="/services" element={<ServicesPage />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminPanel />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
