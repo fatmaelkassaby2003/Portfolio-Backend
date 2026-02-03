@@ -25,6 +25,7 @@ const AdminDashboard = () => {
     const [counts, setCounts] = useState({ projects: 0, skills: 0, services: 0 });
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     // ✅ Check user session
     useEffect(() => {
@@ -341,8 +342,10 @@ const AdminDashboard = () => {
                     <div style={{
                         width: '280px', background: 'linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%)',
                         position: 'fixed', height: '100vh', zIndex: 1000,
-                        display: 'flex', flexDirection: 'column', boxShadow: '4px 0 20px rgba(0,0,0,0.1)'
-                    }}>
+                        display: 'flex', flexDirection: 'column', boxShadow: '4px 0 20px rgba(0,0,0,0.1)',
+                        left: isSidebarOpen ? '0' : '-280px',
+                        transition: 'left 0.3s ease-in-out'
+                    }} className="admin-sidebar">
                         <div style={{ padding: '30px 25px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                 <div style={{
@@ -369,7 +372,7 @@ const AdminDashboard = () => {
                             ].map(tab => (
                                 <button
                                     key={tab.id}
-                                    onClick={() => { setActiveTab(tab.id); setEditingItem(null); }}
+                                    onClick={() => { setActiveTab(tab.id); setEditingItem(null); setIsSidebarOpen(false); }}
                                     style={{
                                         display: 'flex', alignItems: 'center', gap: '14px',
                                         padding: '13px 18px', borderRadius: '10px', border: 'none',
@@ -407,17 +410,30 @@ const AdminDashboard = () => {
                     </div>
 
                     {/* Main Content */}
-                    <div style={{ flex: 1, marginLeft: '280px', minHeight: '100vh' }}>
+                    <div style={{ flex: 1, marginLeft: '0', minHeight: '100vh' }} className="admin-main-content">
+                        {isSidebarOpen && <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>}
                         <header style={{
                             background: '#fff', padding: '20px 40px', display: 'flex',
                             justifyContent: 'space-between', alignItems: 'center',
                             borderBottom: '1px solid #e5e7eb', position: 'sticky', top: 0, zIndex: 99
                         }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#6b7280', fontSize: '0.9rem' }}>
-                                <LayoutDashboard size={16} />
-                                <span>Admin</span>
-                                <ChevronRight size={13} />
-                                <span style={{ color: '#1e3a8a', fontWeight: '700', textTransform: 'capitalize' }}>{activeTab}</span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                <button
+                                    className="sidebar-toggle"
+                                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                                    style={{
+                                        border: '1px solid #e5e7eb', background: '#fff', borderRadius: '8px',
+                                        padding: '8px', cursor: 'pointer', color: '#1e3a8a'
+                                    }}
+                                >
+                                    <Menu size={20} />
+                                </button>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#6b7280', fontSize: '0.9rem' }}>
+                                    <LayoutDashboard size={16} />
+                                    <span>Admin</span>
+                                    <ChevronRight size={13} />
+                                    <span style={{ color: '#1e3a8a', fontWeight: '700', textTransform: 'capitalize' }}>{activeTab}</span>
+                                </div>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                 <div style={{ textAlign: 'right', marginRight: '5px' }}>
@@ -438,10 +454,10 @@ const AdminDashboard = () => {
                         <main style={{ padding: '40px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '35px' }}>
                                 <div>
-                                    <h1 style={{ fontSize: '2rem', fontWeight: '900', color: '#1e293b', margin: '0 0 8px 0', textTransform: 'capitalize' }}>
-                                        {activeTab === 'overview' ? '📊 Dashboard Overview' : `${activeTab} Management`}
+                                    <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#1e293b', margin: '0 0 8px 0', textTransform: 'capitalize' }}>
+                                        {activeTab === 'overview' ? '📊 Dashboard' : `${activeTab}`}
                                     </h1>
-                                    <p style={{ color: '#64748b', margin: 0, fontSize: '0.95rem' }}>Manage your portfolio data efficiently.</p>
+                                    <p style={{ color: '#64748b', margin: 0, fontSize: '0.85rem' }}>Manage your data.</p>
                                 </div>
                                 {activeTab !== 'profiles' && activeTab !== 'overview' && !editingItem && (
                                     <button
@@ -513,7 +529,7 @@ const AdminDashboard = () => {
                                             </button>
                                         </div>
 
-                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '25px' }}>
+                                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px' }}>
                                             {activeTab === 'projects' && (
                                                 <>
                                                     <div className="form-group"><label>Project Title</label><input value={formData.title || ''} onChange={e => setFormData({ ...formData, title: e.target.value })} required /></div>
@@ -760,6 +776,27 @@ const AdminDashboard = () => {
                 .icon-btn.delete:hover { background: #fef2f2 !important; border-color: #ef4444 !important; }
                 .animate-spin { animation: spin 1s linear infinite; }
                 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+                .sidebar-toggle { display: none; }
+                .admin-main-content { margin-left: 280px !important; }
+                .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+
+                @media (max-width: 992px) {
+                    .sidebar-toggle { display: block !important; }
+                    .admin-sidebar { left: -280px; }
+                    .admin-main-content { margin-left: 0 !important; }
+                    header { padding: 15px 20px !important; }
+                    main { padding: 20px !important; }
+                    h1 { font-size: 1.4rem !important; }
+                    .stats-grid { grid-template-columns: 1fr !important; }
+                }
+
+                @media (max-width: 640px) {
+                    .admin-table-row { display: block; border: 1px solid #e5e7eb; margin-bottom: 15px; border-radius: 12px; padding: 10px; }
+                    .admin-table-row td { display: block; padding: 8px 10px !important; text-align: left !important; }
+                    .admin-table-row td:last-child { text-align: left !important; justify-content: flex-start !important; }
+                    thead { display: none; }
+                }
             `}} />
         </div>
     );

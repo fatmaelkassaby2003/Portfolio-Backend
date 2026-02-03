@@ -197,15 +197,24 @@ section {
   align-items: center;
 }
 
+.menu-icon {
+  display: none;
+  color: var(--text-main);
+  cursor: pointer;
+  z-index: 1001;
+}
+
 .navbar nav ul li a {
   margin: 0 16px;
   color: var(--text-muted);
   font-weight: 500;
   font-size: 14px;
   transition: var(--transition);
+  position: relative;
 }
 
-.navbar nav ul li a:hover {
+.navbar nav ul li a:hover,
+.navbar nav ul li a.active {
   color: var(--text-main);
 }
 
@@ -220,8 +229,45 @@ section {
   transition: var(--transition);
 }
 
-.navbar nav ul li a:hover::after {
+.navbar nav ul li a:hover::after,
+.navbar nav ul li a.active::after {
   width: 100%;
+}
+
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--bg-slate);
+    flex-direction: column;
+    padding-top: 100px;
+    transition: 0.4s ease-in-out;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .navbar nav ul li {
+    width: 100%;
+    text-align: center;
+    margin: 15px 0;
+  }
+
+  .navbar nav ul li a {
+    font-size: 1.2rem;
+    display: block;
+    width: 100%;
+  }
 }
 
 
@@ -1044,6 +1090,19 @@ section {
   .section-header h2 {
     font-size: 2rem;
   }
+
+  .about-cta {
+    text-align: center;
+  }
+
+  #home .header-content .social {
+    justify-content: center;
+    display: flex;
+  }
+
+  #home .header-content .hero-buttons {
+    justify-content: center !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1067,6 +1126,41 @@ section {
 
   .page-section {
     padding: 3rem 0;
+  }
+
+  .portfolio-container {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .about-wrapper {
+    margin-top: 2rem;
+  }
+
+  .about-bio .accent-title {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .about-bio .bio-text {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .experience-badge {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: -30px;
+    width: 80%;
+  }
+
+  .contact-info,
+  .contact-form {
+    padding: 30px 20px;
+  }
+
+  .contact-info h3 {
+    font-size: 24px;
   }
 }
 
@@ -1092,5 +1186,21 @@ section {
   .btn-primary {
     padding: 10px 24px;
     font-size: 13px;
+  }
+
+  .detail-item {
+    gap: 12px;
+    padding: 8px;
+  }
+
+  .detail-item span {
+    font-size: 13px;
+    word-break: break-all;
+  }
+
+  .detail-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
   }
 }
